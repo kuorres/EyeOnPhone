@@ -55,9 +55,9 @@
             android:id="@+id/btnCalibrate"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="📍 Calibration Tips"
+            android:text="📍 Calibrate Eye Tracking"
             android:textColor="#FFFFFF"
-            android:backgroundTint="#333333"
+            android:backgroundTint="#4CAF50"
             android:layout_marginBottom="28dp"/>
 
         <!-- Divider -->

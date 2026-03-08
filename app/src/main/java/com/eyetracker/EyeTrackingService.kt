@@ -212,8 +212,15 @@ class EyeTrackingService : LifecycleService() {
                     val maxPitch = 20f / sensitivity
 
                     // Front camera mirrors, so yaw direction is already correct
-                    val normX = ((-yaw   / maxYaw)   * 0.5f + 0.5f).coerceIn(0f, 1f)
-                    val normY = ((pitch  / maxPitch) * 0.5f + 0.5f).coerceIn(0f, 1f)
+                    val rawX = ((-yaw   / maxYaw)   * 0.5f + 0.5f).coerceIn(0f, 1f)
+                    val rawY = ((pitch  / maxPitch) * 0.5f + 0.5f).coerceIn(0f, 1f)
+
+                    // Apply calibration transformation if available
+                    val rawPoint = android.graphics.PointF(rawX, rawY)
+                    val calibratedPoint = CalibrationManager.applyCalibration(rawPoint)
+                    
+                    val normX = calibratedPoint.x
+                    val normY = calibratedPoint.y
 
                     // Exponential moving average for smoothing
                     smoothX = smoothingAlpha * normX + (1 - smoothingAlpha) * smoothX
