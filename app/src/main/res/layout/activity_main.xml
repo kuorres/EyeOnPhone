@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121212">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="👁 Eye Tracker"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Highlights where you look on screen"
+            android:textColor="#9E9E9E"
+            android:textSize="14sp"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Status -->
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="○ Not Tracking"
+            android:textColor="#9E9E9E"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Start/Stop Button -->
+        <Button
+            android:id="@+id/btnToggleTracking"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="▶ Start Eye Tracking"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:backgroundTint="#1976D2"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Calibrate Button -->
+        <Button
+            android:id="@+id/btnCalibrate"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="📍 Calibration Tips"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#333333"
+            android:layout_marginBottom="28dp"/>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#333333"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Sensitivity -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sensitivity"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="20dp">
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderSensitivity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:valueFrom="20"
+                android:valueTo="100"
+                android:value="70"
+                app:thumbColor="#1976D2"
+                app:trackColorActive="#1976D2"
+                app:trackColorInactive="#333333"/>
+
+            <TextView
+                android:id="@+id/tvSensitivityValue"
+                android:layout_width="56dp"
+                android:layout_height="wrap_content"
+                android:text="70%"
+                android:textColor="#9E9E9E"
+                android:textSize="14sp"
+                android:gravity="end"/>
+        </LinearLayout>
+
+        <!-- Highlight Size -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Highlight Size"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderHighlightSize"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:valueFrom="30"
+                android:valueTo="120"
+                android:value="60"
+                app:thumbColor="#1976D2"
+                app:trackColorActive="#1976D2"
+                app:trackColorInactive="#333333"/>
+
+            <TextView
+                android:id="@+id/tvHighlightSizeValue"
+                android:layout_width="56dp"
+                android:layout_height="wrap_content"
+                android:text="60dp"
+                android:textColor="#9E9E9E"
+                android:textSize="14sp"
+                android:gravity="end"/>
+        </LinearLayout>
+
+        <!-- Highlight Color -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Highlight Color"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="32dp">
+
+            <Button
+                android:id="@+id/btnColorRed"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="Red"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#FF4444"/>
+
+            <Button
+                android:id="@+id/btnColorBlue"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="Blue"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#4488FF"
+                android:alpha="0.4"/>
+
+            <Button
+                android:id="@+id/btnColorGreen"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="Green"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#44FF88"
+                android:alpha="0.4"/>
+
+            <Button
+                android:id="@+id/btnColorYellow"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:text="Yellow"
+                android:textColor="#000000"
+                android:backgroundTint="#FFDD00"
+                android:alpha="0.4"/>
+        </LinearLayout>
+
+        <!-- Info box -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#1E2A3A"
+            android:padding="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ℹ How It Works"
+                android:textColor="#64B5F6"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Uses ML Kit Face Detection + head pose estimation to infer your gaze direction. The front camera analyzes your head angle (yaw/pitch) 30× per second, mapping it to a screen highlight.\n\nFor precise iris-level tracking, external hardware (e.g. Tobii) would be needed."
+                android:textColor="#9E9E9E"
+                android:textSize="13sp"
+                android:lineSpacingMultiplier="1.4"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
