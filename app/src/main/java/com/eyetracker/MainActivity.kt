@@ -3,6 +3,7 @@ package com.eyetracker
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -16,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.slider.Slider
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FoldableDeviceHelper.FoldStateListener {
 
     private lateinit var btnToggleTracking: Button
     private lateinit var btnCalibrate: Button
@@ -31,6 +32,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnColorYellow: Button
 
     private var isTracking = false
+    private lateinit var foldableHelper: FoldableDeviceHelper
+    private var hasShownCalibrationPrompt = false
 
     private val cameraPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -65,19 +68,49 @@ class MainActivity : AppCompatActivity() {
         btnColorGreen        = findViewById(R.id.btnColorGreen)
         btnColorYellow       = findViewById(R.id.btnColorYellow)
 
+        // Initialize foldable device helper
+        foldableHelper = FoldableDeviceHelper(this)
+        foldableHelper.addListener(this)
+
         setupUI()
     }
 
     override fun onResume() {
         super.onResume()
         updateTrackingButton()
+        
+        // Show calibration prompt on first launch
+        if (!hasShownCalibrationPrompt) {
+            hasShownCalibrationPrompt = true
+            showCalibrationPrompt()
+        }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        foldableHelper.onConfigurationChanged(newConfig)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        foldableHelper.removeListener(this)
+    }
+
+    // FoldableDeviceHelper.FoldStateListener implementation
+    override fun onFoldStateChanged() {
+        // Device was folded/unfolded - prompt for recalibration
+        if (CalibrationManager.isCalibrated()) {
+            showRecalibrationPrompt()
+        }
     }
 
     private fun setupUI() {
         btnToggleTracking.setOnClickListener {
             if (isTracking) stopTracking() else requestAllPermissions()
         }
-        btnCalibrate.setOnClickListener { showCalibrationInfo() }
+        btnCalibrate.setOnClickListener { 
+            startActivity(Intent(this, CalibrationActivity::class.java))
+        }
 
         sliderSensitivity.addOnChangeListener { _, value, _ ->
             tvSensitivityValue.text = "${value.toInt()}%"
@@ -161,11 +194,34 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Eye tracking stopped.", Toast.LENGTH_SHORT).show()
     }
 
-    private fun showCalibrationInfo() {
+    private fun showCalibrationPrompt() {
         AlertDialog.Builder(this)
-            .setTitle("📍 Calibration Tips")
-            .setMessage("For best results:\n\n• Hold device at arm's length\n• Ensure good lighting\n• Look straight at the screen\n• Move your head, not just your eyes\n\nAdjust Sensitivity to fine-tune responsiveness.")
-            .setPositiveButton("Got it", null).show()
+            .setTitle("Eye Calibration")
+            .setMessage("Would you like to calibrate eye tracking for better accuracy?\n\n" +
+                    "Calibration takes about 30 seconds and helps improve gaze tracking precision.")
+            .setPositiveButton("Calibrate Now") { _, _ ->
+                startActivity(Intent(this, CalibrationActivity::class.java))
+            }
+            .setNegativeButton("Skip") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setCancelable(true)
+            .show()
+    }
+
+    private fun showRecalibrationPrompt() {
+        AlertDialog.Builder(this)
+            .setTitle("Recalibration Recommended")
+            .setMessage("Your device configuration has changed (fold/unfold detected).\n\n" +
+                    "Recalibrating will ensure accurate eye tracking.")
+            .setPositiveButton("Recalibrate") { _, _ ->
+                startActivity(Intent(this, CalibrationActivity::class.java))
+            }
+            .setNegativeButton("Later") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setCancelable(true)
+            .show()
     }
 
     private fun showPermissionDeniedDialog(permission: String) {

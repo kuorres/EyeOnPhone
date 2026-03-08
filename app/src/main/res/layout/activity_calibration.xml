@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <!-- Camera Preview Container -->
+    <FrameLayout
+        android:id="@+id/cameraPreviewContainer"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="32dp"
+        android:background="#1A1A1A">
+
+        <androidx.camera.view.PreviewView
+            android:id="@+id/cameraPreview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!-- Overlay for camera preview border -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:foreground="@drawable/camera_preview_border" />
+    </FrameLayout>
+
+    <!-- Calibration Target Points Container -->
+    <FrameLayout
+        android:id="@+id/targetContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Dynamic calibration targets will be drawn here by CalibrationTargetView -->
+    </FrameLayout>
+
+    <!-- Instructions Overlay (Top) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="#AA000000">
+
+        <TextView
+            android:id="@+id/tvCalibrationTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Eye Calibration"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tvCalibrationProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Point 1 of 9"
+            android:textColor="#64B5F6"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
+
+    <!-- Instructions Overlay (Bottom) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="#AA000000">
+
+        <TextView
+            android:id="@+id/tvCalibrationInstructions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Look at the pulsing circle and hold your gaze steady"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.3" />
+
+        <Button
+            android:id="@+id/btnCancelCalibration"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:text="Cancel"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#666666"
+            android:paddingStart="32dp"
+            android:paddingEnd="32dp" />
+    </LinearLayout>
+
+    <!-- Completion Overlay (Initially Hidden) -->
+    <LinearLayout
+        android:id="@+id/completionOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="#DD000000"
+        android:visibility="gone"
+        android:padding="32dp">
+
+        <TextView
+            android:id="@+id/tvCompletionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="✓ Calibration Complete!"
+            android:textColor="#4CAF50"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tvCalibrationQuality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quality: 85%"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:layout_marginTop="16dp"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tvQualityDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your eye tracking accuracy has been improved"
+            android:textColor="#9E9E9E"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:gravity="center" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="32dp">
+
+            <Button
+                android:id="@+id/btnRecalibrate"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:text="Recalibrate"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#666666"
+                android:layout_marginEnd="12dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp" />
+
+            <Button
+                android:id="@+id/btnDone"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:text="Done"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#4CAF50"
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
